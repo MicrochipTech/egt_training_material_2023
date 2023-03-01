@@ -1,0 +1,15 @@
+11:21:42 **** Incremental Build of configuration Debug for project EVcharging_Training ****
+make all 
+Building file: ../EVcharging1.cpp
+Invoking: GCC C++ Compiler
+g++ -o "EVcharging1.o" "../EVcharging1.cpp"  -O0 -g3 -Wall -c -fmessage-length=0 `pkg-config libegt --cflags` -MMD -MP -MF"EVcharging1.d" -MT"EVcharging1.o"
+Finished building: ../EVcharging1.cpp
+ 
+Building target: EVcharging_Training
+Invoking: GCC C++ Linker
+g++ -o "EVcharging_Training" ./EVcharging1.o    -lpthread `pkg-config libegt --libs` -pthread
+Finished building target: EVcharging_Training
+ 
+
+11:21:44 Build Finished. 0 errors, 0 warnings. (took 2s.465ms)
+

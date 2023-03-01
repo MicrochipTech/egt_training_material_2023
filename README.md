@@ -1,2 +1,4 @@
-# egt_training_material_2023
-EGT Graphics Training related material.
+# Graphics Training Campagn WorldWide : EGT Material
+
+This repository contains the EGT Training material to provide a simple installation of the training material for Linux Hosts. 
+

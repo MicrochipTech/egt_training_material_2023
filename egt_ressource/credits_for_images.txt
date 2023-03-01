@@ -1,0 +1,5 @@
+Plus icon : 'Flaticon.com' 
+Minus icon : 'Flaticon.com'
+Green Power On/Off Icon : 'Flaticon.com'
+Red Power On/Off Icon : 'Flaticon.com'
+Battery Icon : 'Flaticon.com'
