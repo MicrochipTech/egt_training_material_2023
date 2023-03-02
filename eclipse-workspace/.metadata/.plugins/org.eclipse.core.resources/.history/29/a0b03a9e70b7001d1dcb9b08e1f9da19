@@ -1,0 +1,189 @@
+/*
+ * Name : main.cpp
+ * Author : Microchip MPU32 Technical marketing
+ *
+ * Copyright (C) Microchip Technology Inc.  All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+#include <string>
+#include <ctime>
+#include <memory>
+#include <egt/ui>
+#include <egt/uiloader.h>
+#include "time_management.h"
+
+int main(int argc, char** argv)
+{
+	egt::Application app(argc, argv);
+	egt::experimental::UiLoader loader;
+
+	//----------Window widgets----------//
+	auto window = std::static_pointer_cast<egt::Window>(loader.load("file:ui.xml"));
+	auto screen_saver=window->find_child<egt::Window>("Screen_saver_window");
+
+
+	//---------------------------------//
+
+	//-----------Initializations------//
+	auto plus_button=window->find_child<egt::ImageButton>("ImageButtonPlus");
+	auto minus_button=window->find_child<egt::ImageButton>("ImageButtonMinus");
+	plus_button->fill_flags().clear();
+	minus_button->fill_flags().clear();
+
+	auto pattern_pb=egt::Pattern(egt::Pattern::Type::linear_vertical,{{0, egt::Color::css("#03a5f5")},{100, egt::Color::css("#023e7a8")}});
+
+	auto battery_progress_bar=window->find_child<egt::ProgressBar>("Battery_ProgressBar");
+	battery_progress_bar->border(0);
+	battery_progress_bar->fill_flags().clear();
+	battery_progress_bar->color(egt::Palette::ColorId::button_bg,pattern_pb);
+
+	auto percentage_charged_text=window->find_child<egt::Label>("BatteryCharged_value_0");
+	percentage_charged_text->text("50 %");
+
+	auto elapsed_time_text=window->find_child<egt::Label>("Elapsed_Time_value");
+	elapsed_time_text->text("60");
+
+	auto delivered_energy_text=window->find_child<egt::Label>("Delivered_energy_value");
+	delivered_energy_text->text("25");
+
+	auto battery_fully_charged_text=window->find_child<egt::Label>("Label_Battery_Full_Charged");
+	//---------------End------------------//
+
+	//Periodic Timers initialization
+    egt::PeriodicTimer screen_saver_timer(std::chrono::seconds(10));
+    egt::PeriodicTimer blinking_green_wire_timer(std::chrono::milliseconds(500));
+
+
+	// passing from startup screen to main screen when pressing the red button
+	auto power_off_button =window->find_child<egt::ImageButton>("ImageButton_power_off");
+	power_off_button->fill_flags().clear();
+	power_off_button->on_click([] (egt::Event &)
+	{
+		//***Complete here***//
+
+	});
+
+	//passing from the main screen to the startup screen when pressing the green button
+
+	//***Complete here***//
+
+
+
+
+
+
+
+
+
+
+
+
+    //Plus button management
+
+	//Blinking text
+    auto green_wire_image=window->find_child<egt::ImageLabel>("Green_wire");
+
+
+	int remaining_time_value=60;// Battery charging time is 2 hours = 120 minutes. We initialize the charge at 50%. So it remains 60 minutes for the battery to be fully charged.
+	plus_button->on_click([&remaining_time_text,&green_wire_image,&blinking_green_wire_timer,&battery_progress_bar, &percentage_charged_text, &remaining_time_value,&elapsed_time_text,&delivered_energy_text,&battery_fully_charged_text,&screen_saver_timer](egt::Event &)
+	{
+		screen_saver_timer.stop();
+		screen_saver_timer.start();
+		// Uncomment the two lines bellow //
+		//battery_progress_bar->value(battery_progress_bar->value()+10);
+		//percentage_charged_text->text(std::to_string(battery_progress_bar->value())+" %"); //Read the battery_progress_bar value, convert it to string and set-it as the text of the percentage_charged_text
+
+		//***Complete here calculus of remaining time***//
+
+		//Remaining time text to set bellow
+
+		elapsed_time_text->text(std::to_string(120-remaining_time_value));
+		delivered_energy_text->text(std::to_string(25*(120-remaining_time_value)/60));
+
+	});
+
+	//Minus button management
+
+	/*minus_button->on_click([&blinking_green_wire_timer,&battery_progress_bar, &percentage_charged_text,&remaining_time_value, &remaining_time_text,&elapsed_time_text,&delivered_energy_text,&battery_fully_charged_text,&screen_saver_timer](egt::Event &)
+	{
+		screen_saver_timer.stop();
+		screen_saver_timer.start();
+
+		battery_progress_bar->value(battery_progress_bar->value()-10);
+		percentage_charged_text->text(std::to_string(battery_progress_bar->value())+" %");
+		if(remaining_time_value<120)
+		{
+			remaining_time_value+=12;
+		}
+		remaining_time_text->text(std::to_string(remaining_time_value));
+		elapsed_time_text->text(std::to_string(120-remaining_time_value));
+		delivered_energy_text->text(std::to_string(25*(120-remaining_time_value)/60));
+	});*/
+
+    //Screen saver management
+    auto screen_saver_remaining_time_text=window->find_child<egt::Label>("Remaining_time_value");
+    //Battery_charged_value_screen_saver
+    auto screen_saver_battery_charged_value=window->find_child<egt::Label>("Battery_charged_value_screen_saver");
+
+    //Screen saver progressbar initialization
+
+    //***Complete here for initialization of the progressbar
+    egt::PeriodicTimer progress_bar_timer(std::chrono::milliseconds(20));
+
+
+    /*screen_saver_timer.on_timeout([&percentage_charged_text,&screen_saver_battery_charged_value,&screen_saver, &main_screen,&screen_saver_remaining_time_text, &remaining_time_text, &progress_bar_timer ]()
+    {
+       main_screen->hide();
+       screen_saver->show();
+       screen_saver_remaining_time_text->text(remaining_time_text->text()+" min");
+       screen_saver_battery_charged_value->text(percentage_charged_text->text());
+       progress_bar_timer.start();
+
+    });*/
+
+    /*    progress_bar_timer.on_timeout([&battery_progress_bar,&screen_saver_progress_bar]()
+	{
+    	if (screen_saver_progress_bar->value()==100)
+		{
+    		screen_saver_progress_bar->value(0);
+		}
+    	screen_saver_progress_bar->value(screen_saver_progress_bar->value()+1);//
+	});*/
+
+    //K1 press management
+
+    //***Complete here***//
+
+    blinking_green_wire_timer.on_timeout([&green_wire_image]()
+	{
+    	green_wire_image->visible_toggle();
+	});
+    blinking_green_wire_timer.start();
+
+    //Time and date management
+    egt::PeriodicTimer time_timer(std::chrono::seconds(1));
+	auto date_text=window->find_child<egt::Label>("Date_value");
+	auto time_text=window->find_child<egt::Label>("Time_value");
+	date_text->text(current_date());
+    time_timer.on_timeout([&time_text]()
+    {
+       time_text->text(current_time());
+    });
+    time_timer.start();
+
+
+return app.run();
+}
+
+
