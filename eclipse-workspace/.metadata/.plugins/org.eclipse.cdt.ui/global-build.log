@@ -1,5 +1,0 @@
-12:19:24 **** Clean-only build of configuration Debug for project EVCharging_Training_complete ****
-make clean 
-rm -rf ./main.d ./main.o ./time_management.d ./time_management.o
-rm -rf EVCharging_Training_complete
- 
